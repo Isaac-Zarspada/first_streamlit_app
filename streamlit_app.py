@@ -1,5 +1,6 @@
 import streamlit
 import pandas
+import requests
 
 streamlit.title("Sweet P's Smoothies")
 
@@ -21,3 +22,12 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 # Display the table on the page.
 streamlit.dataframe(fruits_to_show)
 
+streamlit.header('Fruity Fruit Adivce!')
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+
+
+# normalizes a json file into datframe ready format
+fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+# consumes normalized data into a viewable data table
+streamlit.dataframe(fruityvice_normalized)
